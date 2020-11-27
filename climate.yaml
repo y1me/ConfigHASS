@@ -1,0 +1,37 @@
+#climate:
+  - platform: generic_thermostat
+    name: Salon
+    heater: switch.control_rad_salon
+    target_sensor: sensor.capteur_t_p_h_salon_temperature
+    min_temp: 15
+    max_temp: 25
+    target_temp: 20
+    cold_tolerance: 0.3
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
+  - platform: generic_thermostat
+    name: Chambre
+    heater: switch.control_rad_chp
+    target_sensor: sensor.capteur_t_p_h_chambrep_temperature
+    min_temp: 15
+    max_temp: 25
+    target_temp: 20
+    cold_tolerance: 0.3
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
+  - platform: generic_thermostat
+    name: ChambreD
+    heater: switch.control_rad_chd
+    target_sensor: sensor.capteur_t_p_h_chambred_temperature 
+    min_temp: 15
+    max_temp: 25
+    target_temp: 20
+    cold_tolerance: 0.3
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3

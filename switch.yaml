@@ -1,0 +1,54 @@
+#switch:
+  - platform: template
+    switches:
+      control_rad_fenetre:
+        value_template: "{{ is_state('switch.0x842e14fffe5adf26_switch', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.0x842e14fffe5adf26_switch
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.0x842e14fffe5adf26_switch
+      control_rad_entree:
+        value_template: "{{ is_state('switch.0x842e14fffe5af338_switch', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.0x842e14fffe5af338_switch
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.0x842e14fffe5af338_switch
+      control_rad_salon:
+          # value_template: "{{ is_state('switch.0x842e14fffe5af338_switch', 'off') }}"
+        value_template: "{{ is_state('switch.0x842e14fffe5af338_switch', 'off') or is_state('switch.0x842e14fffe5adf26_switch', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.0x842e14fffe5af338_switch, switch.0x842e14fffe5adf26_switch
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.0x842e14fffe5af338_switch, switch.0x842e14fffe5adf26_switch
+      control_rad_chp:
+        value_template: "{{ is_state('switch.radiateur_chambre_p_switch', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_chambre_p_switch
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_chambre_p_switch
+      control_rad_chd:
+        value_template: "{{ is_state('switch.radiateur_chambre_d_switch', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_chambre_d_switch
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_chambre_d_switch

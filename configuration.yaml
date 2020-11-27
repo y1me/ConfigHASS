@@ -1,0 +1,23 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Add python script feature
+python_script:
+# Example configuration.yaml entry
+# Add logger feature
+logger:
+    default: info
+    logs:
+        homeassistant.components.yamaha: critical
+        custom_components.my_integration: critical
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+switch: !include switch.yaml
+climate: !include climate.yaml

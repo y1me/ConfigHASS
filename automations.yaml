@@ -1,0 +1,80 @@
+- id: '1605732802647'
+  alias: Auto_off_porche
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_right
+    domain: switch
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_right
+    domain: switch
+  mode: single
+- id: '1605732895096'
+  alias: All_off_light
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 27ec107eefd03d155a0e55028349748e
+    type: click
+    subtype: 'off'
+    discovery_id: 0x842e14fffe6795ae click_off
+  condition: []
+  action:
+  - type: turn_off
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    entity_id: switch.interrupteur_cuisine_principal_switch_left
+    domain: switch
+  - type: turn_off
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    entity_id: switch.interrupteur_cuisine_principal_switch_right
+    domain: switch
+  - type: turn_off
+    device_id: 25e6ff5b9dea74031706b69ec3b06d2a
+    entity_id: switch.interrupteur_chd_principal_switch
+    domain: switch
+  - type: turn_off
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_left
+    domain: switch
+  - type: turn_off
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_right
+    domain: switch
+  - type: turn_off
+    device_id: 57aea766457dccdec8623d1814a5ab05
+    entity_id: switch.interrupteur_sdb_principal_switch
+    domain: switch
+  - type: turn_off
+    device_id: 15bfda82562cf1ff3501722da5873850
+    entity_id: switch.interrupteur_salon_principal_switch
+    domain: switch
+  - type: turn_off
+    device_id: 38a2e4967ac7848912c65fd12e08cfac
+    entity_id: switch.interrupteur_chl_principal_switch
+    domain: switch
+  mode: single
+- id: '1605977432734'
+  alias: New Automation
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 15bfda82562cf1ff3501722da5873850
+    type: action
+    subtype: release
+    discovery_id: 0x00158d00045bcb47 action_release
+  condition: []
+  action:
+  - service: python_script.hello_world
+    data: {}
+  mode: single
