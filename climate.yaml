@@ -29,7 +29,19 @@
     target_sensor: sensor.capteur_t_p_h_chambred_temperature 
     min_temp: 15
     max_temp: 25
-    target_temp: 20
+    target_temp: 19
+    cold_tolerance: 0.3
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
+  - platform: generic_thermostat
+    name: ChambreL
+    heater: switch.control_rad_chl
+    target_sensor: sensor.capteur_t_p_h_chambrel_temperature 
+    min_temp: 15
+    max_temp: 25
+    target_temp: 19
     cold_tolerance: 0.3
     min_cycle_duration:
       seconds: 5

@@ -1,61 +1,3 @@
-#########################################################################################
-
-#
-
-# Originally created by ABMANTIS - https://ledstripsandcode.blogspot.com/2018/11/simple-thermostat-scheduler-in-home.html
-
-#
-
-# Modified to suit my needs - KeithH666
-
-#
-
-#########################################################################################
-
-# import HA input_numbers for WeekdayMorning StartHour/StartMinute - FinishHour/FinishMinute
-
-# import HA input_numbers for WeekdayEvening StartHour/StartMinute - FinishHour/FinishMinute
-
-# import HA input_numbers for SatMorning StartHour/StartMinute - FinishHour/FinishMinute
-
-# import HA input_numbers for SatEvening StartHour/StartMinute - FinishHour/FinishMinute
-
-# import HA input_numbers for SundayMorning StartHour/StartMinute - FinishHour/FinishMinute
-
-# import HA input_numbers for SundayEvening StartHour/StartMinute - FinishHour/FinishMinute
-
-wmsh = int(float(hass.states.get('input_number.wmsh').state))
-
-wmsm = int(float(hass.states.get('input_number.wmsm').state))
-
-wmfh = int(float(hass.states.get('input_number.wmfh').state))
-
-wmfm = int(float(hass.states.get('input_number.wmfm').state))
-
-wesh = int(float(hass.states.get('input_number.wesh').state))
-
-wesm = int(float(hass.states.get('input_number.wesm').state))
-
-wefh = int(float(hass.states.get('input_number.wefh').state))
-
-wefm = int(float(hass.states.get('input_number.wefm').state))
-
-satsh = int(float(hass.states.get('input_number.satmsh').state))
-
-satsm = int(float(hass.states.get('input_number.satmsm').state))
-
-sateh = int(float(hass.states.get('input_number.satesh').state))
-
-satem = int(float(hass.states.get('input_number.satesm').state))
-
-sunsh = int(float(hass.states.get('input_number.sunehs').state))
-
-sunsm = int(float(hass.states.get('input_number.sunems').state))
-
-suneh = int(float(hass.states.get('input_number.sunefh').state))
-
-sunem = int(float(hass.states.get('input_number.sunefm').state))
-
 # Import HA Booleans for override/heating away/heating on
 
 # climate override is for when I'm home earlier then expected or am staying up later then expected
@@ -66,29 +8,32 @@ climate_override = hass.states.get('input_boolean.climate_override').state
 
 heating_away     = hass.states.get('input_boolean.heat_away').state
 
+# heating_away is when I'm away at work or just elsewhere
+
+heating_night     = hass.states.get('input_boolean.heating_night').state
+
 # heating_on is an override for the whole scheduler - such as in summer it acts to turn it all off
 
 heating_on       = hass.states.get('input_boolean.heating_on').state
 
-# The next 3 are the temperatures for each room 
 
-temp_heat_livingr = int(float(hass.states.get('input_number.heat_home_livingr').state))
 
-temp_heat_bathr   = int(float(hass.states.get('input_number.heat_home_bathr').state))
+temp_heat_salon    = int(float(hass.states.get('input_number.temp_salon').state))
 
-temp_heat_hall    = int(float(hass.states.get('input_number.heat_home_hall').state))
+temp_heat_away    = int(float(hass.states.get('input_number.temp_away').state))
 
-# Override for the away temp
+temp_heat_night    = int(float(hass.states.get('input_number.temp_night').state))
 
-temp_heat_away   = int(float(hass.states.get('input_number.heat_away').state))
 
 WEEK_SCHEDULE = [
+    [datetime.time( 6, 0), datetime.time( 9, 0)],     # from 07:00 to 09:00
+    [datetime.time(16, 30), datetime.time(23, 29, 59)] # from 18:00 to 23:59
+]
 
-    [datetime.time(00,00), datetime.time(00,30)],    
+WEEK_NIGHT_SCHEDULE = [
 
-    [datetime.time((wmsh),(wmsm)), datetime.time((wmfh),(wmfm))],    
-
-    [datetime.time((wesh),(wesm)), datetime.time((wefh),(wefm),59)]   
+    [datetime.time(00,00), datetime.time(5, 59, 59)],    
+    [datetime.time(23, 30), datetime.time(23, 59, 59)] # from 18:00 to 23:59
 
 ]
 

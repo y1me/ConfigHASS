@@ -52,3 +52,13 @@
           service: switch.turn_on
           data:
             entity_id: switch.radiateur_chambre_d_switch
+      control_rad_chl:
+        value_template: "{{ is_state('switch.radiateur_chambre_l_switch', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_chambre_l_switch
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_chambre_l_switch
