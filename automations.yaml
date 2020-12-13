@@ -62,9 +62,13 @@
     device_id: 38a2e4967ac7848912c65fd12e08cfac
     entity_id: switch.interrupteur_chl_principal_switch
     domain: switch
+  - type: turn_off
+    device_id: 8db425e0cee16558c87cb8f7142620a5
+    entity_id: switch.interrupteur_ch_principal
+    domain: switch
   mode: single
 - id: '1605977432734'
-  alias: New Automation
+  alias: New Automation hello
   description: ''
   trigger:
   - platform: device
@@ -76,5 +80,17 @@
   condition: []
   action:
   - service: python_script.hello_world
+    data: {}
+  mode: single
+- id: '1607901913259'
+  alias: New Automation
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /10
+    seconds: '00'
+  condition: []
+  action:
+  - service: python_script.salon_heater_scheduler
     data: {}
   mode: single
