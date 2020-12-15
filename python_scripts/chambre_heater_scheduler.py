@@ -18,7 +18,7 @@ heating_on       = hass.states.get('input_boolean.heating_on').state
 
 
 
-temp_heat_salon    = int(float(hass.states.get('input_number.temp_salon').state))
+temp_heat_chambre    = int(float(hass.states.get('input_number.temp_chambre').state))
 
 temp_heat_away    = int(float(hass.states.get('input_number.temp_away').state))
 
@@ -26,33 +26,33 @@ temp_heat_night    = int(float(hass.states.get('input_number.temp_night').state)
 
 
 WEEK_SCHEDULE = [
-    [datetime.time( 6, 0), datetime.time( 8, 0)],     # from 07:00 to 09:00
-    [datetime.time(16, 30), datetime.time(21, 59, 59)] # from 18:00 to 23:59
+    [datetime.time( 5, 30), datetime.time( 8, 0)],     # from 07:00 to 09:00
+    [datetime.time(20, 00), datetime.time(23, 44, 59)] # from 18:00 to 23:59
 ]
 
 WEEK_NIGHT_SCHEDULE = [
 
-    [datetime.time(00,00), datetime.time(5, 59, 59)],    
-    [datetime.time(22, 00), datetime.time(23, 59, 59)] # from 18:00 to 23:59
+    [datetime.time(00,00), datetime.time(5, 29, 59)],    
+    [datetime.time(23, 45), datetime.time(23, 59, 59)] # from 18:00 to 23:59
 
 ]
 
 WEEKEND_SCHEDULE = [
 
-    [datetime.time( 7, 0), datetime.time( 21, 59, 59)]     # from 07:00 to 09:00
+    [datetime.time( 7, 0), datetime.time( 22, 59, 59)]     # from 07:00 to 09:00
 ]
 
 WEEKEND_NIGHT_SCHEDULE = [
 
     [datetime.time(00,00), datetime.time(6, 59, 59)],    
-    [datetime.time(22, 00), datetime.time(23, 59, 59)] # from 18:00 to 23:59
+    [datetime.time(23, 00), datetime.time(23, 59, 59)] # from 18:00 to 23:59
 
 ]
 
 
 # Initially setup target temps from input_numbers
 
-TEMP_HEAT_SALON = temp_heat_salon
+TEMP_HEAT_CHAMBRE = temp_heat_chambre
 
 TEMP_HEAT_NIGHT = temp_heat_night
 
@@ -60,7 +60,7 @@ TEMP_HEAT_AWAY = temp_heat_away
 
 # Create the climate entities
 
-climate_entity  = 'climate.salon'    # set to your thermostat entity
+climate_entity  = 'climate.chambre'    # set to your thermostat entity
 
 # if heating_on (ie autumn/winter/spring)
 
@@ -92,7 +92,7 @@ if heating_on == 'on':
 
     # get the current temp for each room
 
-    current_salon_temp = hass.states.get(climate_entity).attributes['temperature']
+    current_chambre_temp = hass.states.get(climate_entity).attributes['temperature']
 
     # get current date and time
 
@@ -116,7 +116,7 @@ if heating_on == 'on':
 
     # determine if we want the heating on for this time in the schedule
 
-    new_temp_salon = TEMP_HEAT_AWAY    
+    new_temp_chambre = TEMP_HEAT_AWAY    
 
     for high_time in current_schedule:
 
@@ -126,7 +126,7 @@ if heating_on == 'on':
 
         if start <= now <= end:        
 
-            new_temp_salon = TEMP_HEAT_SALON
+            new_temp_chambre = TEMP_HEAT_CHAMBRE
 
             break
 
@@ -138,7 +138,7 @@ if heating_on == 'on':
 
         if start <= now <= end:        
 
-            new_temp_salon = TEMP_HEAT_NIGHT
+            new_temp_chambre = TEMP_HEAT_NIGHT
 
             break
 
@@ -148,10 +148,11 @@ if heating_on == 'on':
 
         #in_high_time = True
 
-    if new_temp_salon != current_salon_temp: 
 
-        logger.info("Hello Set salon temp to %s", new_temp_salon)
+    if new_temp_chambre != current_chambre_temp: 
+
         # set the thermostat target temperature/presetmode/hvac mode and turn on.
+        logger.info("Hello Set chambre temp to %s", new_temp_chambre) 
 
         hass.services.call('climate', 'turn_on', {'entity_id': climate_entity})
 
@@ -159,7 +160,7 @@ if heating_on == 'on':
 
         #hass.services.call('climate', 'set_hvac_mode', {'entity_id': climate_entity,  'hvac_mode': "heat"})
 
-        hass.services.call('climate', 'set_temperature', {'entity_id': climate_entity,  'temperature': new_temp_salon, 'hvac_mode': "heat"})
+        hass.services.call('climate', 'set_temperature', {'entity_id': climate_entity,  'temperature': new_temp_chambre, 'hvac_mode': "heat"})
 
         #hass.services.call('climate', 'turn_on', {'entity_id': climate_entity1})
 
