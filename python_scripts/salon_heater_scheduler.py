@@ -26,14 +26,14 @@ temp_heat_night    = int(float(hass.states.get('input_number.temp_night').state)
 
 
 WEEK_SCHEDULE = [
-    [datetime.time( 6, 0), datetime.time( 8, 0)],     # from 07:00 to 09:00
-    [datetime.time(16, 30), datetime.time(21, 59, 59)] # from 18:00 to 23:59
+    [datetime.time( 5, 30), datetime.time( 8, 0)],     # from 07:00 to 09:00
+    [datetime.time(16, 0), datetime.time(21, 59, 59)] # from 18:00 to 23:59
 ]
 
 WEEK_NIGHT_SCHEDULE = [
 
-    [datetime.time(00,00), datetime.time(5, 59, 59)],    
-    [datetime.time(22, 00), datetime.time(23, 59, 59)] # from 18:00 to 23:59
+    [datetime.time(00,00), datetime.time(5, 29, 59)],    
+    [datetime.time(23, 00), datetime.time(23, 59, 59)] # from 18:00 to 23:59
 
 ]
 
@@ -118,17 +118,20 @@ if heating_on == 'on':
 
     new_temp_salon = TEMP_HEAT_AWAY    
 
-    for high_time in current_schedule:
+    if climate_override == 'on':
+        new_temp_salon = TEMP_HEAT_SALON
+    else :
+        for high_time in current_schedule:
 
-        start = high_time[0]
+            start = high_time[0]
 
-        end = high_time[1]
+            end = high_time[1]
 
-        if start <= now <= end:        
+            if start <= now <= end:        
 
-            new_temp_salon = TEMP_HEAT_SALON
+                new_temp_salon = TEMP_HEAT_SALON
 
-            break
+                break
 
     for high_time in current_schedule_night:
 

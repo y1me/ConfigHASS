@@ -27,7 +27,7 @@ temp_heat_night    = int(float(hass.states.get('input_number.temp_night').state)
 
 WEEK_SCHEDULE = [
     [datetime.time( 5, 30), datetime.time( 8, 0)],     # from 07:00 to 09:00
-    [datetime.time(20, 00), datetime.time(23, 44, 59)] # from 18:00 to 23:59
+    [datetime.time(19, 00), datetime.time(23, 44, 59)] # from 18:00 to 23:59
 ]
 
 WEEK_NIGHT_SCHEDULE = [

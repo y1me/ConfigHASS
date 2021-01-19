@@ -96,3 +96,162 @@
   - service: python_script.chambre_heater_scheduler
     data: {}
   mode: single
+- id: '1608937237624'
+  alias: Disable Heater Weekend
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: ab41c2848c7d1fc4971a6940f557bb28
+    entity_id: binary_sensor.pir_sensor_salon_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  condition:
+  - condition: time
+    after: '9:00'
+    before: '22:00'
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    entity_id: input_boolean.heat_away
+  mode: single
+- id: '1608937436608'
+  alias: Enable Heater Weekend
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: ab41c2848c7d1fc4971a6940f557bb28
+    entity_id: binary_sensor.pir_sensor_salon_occupancy
+    domain: binary_sensor
+  condition:
+  - condition: time
+    after: '9:00'
+    before: '22:00'
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.heat_away
+  mode: single
+- id: '1609193648126'
+  alias: Enable heater override
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: ab41c2848c7d1fc4971a6940f557bb28
+    entity_id: binary_sensor.pir_sensor_salon_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    after: '8:00'
+    before: '16:30'
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    entity_id: input_boolean.climate_override
+  mode: single
+- id: '1609194043746'
+  alias: Disable heater override
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: ab41c2848c7d1fc4971a6940f557bb28
+    entity_id: binary_sensor.pir_sensor_salon_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 4
+      seconds: 0
+  condition:
+  - condition: time
+    after: '8:00'
+    before: '16:30'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.climate_override
+  mode: single
+- id: '1609196142687'
+  alias: Disable heater override time
+  description: ''
+  trigger:
+  - platform: time
+    at: '16:31'
+  condition:
+  - condition: time
+    after: '16:30'
+    before: '16:32'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.climate_override
+  mode: single
+- id: '1609197470304'
+  alias: Light dowstairs auto off
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: ab41c2848c7d1fc4971a6940f557bb28
+    entity_id: binary_sensor.pir_sensor_salon_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    entity_id: switch.interrupteur_cuisine_principal_switch_left
+    domain: switch
+  - type: turn_off
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    entity_id: switch.interrupteur_cuisine_principal_switch_right
+    domain: switch
+  - type: turn_off
+    device_id: 15bfda82562cf1ff3501722da5873850
+    entity_id: switch.interrupteur_salon_principal_switch
+    domain: switch
+  - type: turn_off
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_left
+    domain: switch
+  - type: turn_off
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_right
+    domain: switch
+  mode: single
