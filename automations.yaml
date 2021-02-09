@@ -2,14 +2,14 @@
   alias: Auto_off_porche
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 6cbde7d3f7e07a7100de37b285a44a17
-    entity_id: switch.0x00158d00042640bf_switch_right
-    domain: switch
+  - type: no_motion
+    platform: device
+    device_id: 108a2d214bcede650b84546eefefec04
+    entity_id: binary_sensor.pir_sensor_porche_occupancy
+    domain: binary_sensor
     for:
       hours: 0
-      minutes: 30
+      minutes: 5
       seconds: 0
   condition: []
   action:
@@ -66,6 +66,18 @@
     device_id: 8db425e0cee16558c87cb8f7142620a5
     entity_id: switch.interrupteur_ch_principal
     domain: switch
+  - type: turn_off
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+  - type: turn_off
+    device_id: dfb4680f0d95a05e5c42e37cd0e18d46
+    entity_id: light.lampe_tv
+    domain: light
+  - type: turn_off
+    device_id: 2ed91ee0771b74686e877ee730958fbb
+    entity_id: light.lampe_salon_blanche
+    domain: light
   mode: single
 - id: '1605977432734'
   alias: New Automation hello
@@ -97,7 +109,7 @@
     data: {}
   mode: single
 - id: '1608937237624'
-  alias: Disable Heater Weekend
+  alias: Disable Heater Weekend salon
   description: ''
   trigger:
   - type: no_motion
@@ -110,12 +122,23 @@
       minutes: 20
       seconds: 0
   condition:
-  - condition: time
-    after: '9:00'
-    before: '22:00'
-    weekday:
-    - sat
-    - sun
+  - condition: and
+    conditions:
+    - condition: time
+      after: '9:00'
+      before: '22:00'
+      weekday:
+      - sat
+      - sun
+    - type: is_no_motion
+      condition: device
+      device_id: 1d8d1b9b1933487ef081d89a8cf9d047
+      entity_id: binary_sensor.pir_sensor_etage_occupancy
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 20
+        seconds: 0
   action:
   - service: input_boolean.turn_on
     data: {}
@@ -130,6 +153,11 @@
     device_id: ab41c2848c7d1fc4971a6940f557bb28
     entity_id: binary_sensor.pir_sensor_salon_occupancy
     domain: binary_sensor
+  - type: motion
+    platform: device
+    device_id: 1d8d1b9b1933487ef081d89a8cf9d047
+    entity_id: binary_sensor.pir_sensor_etage_occupancy
+    domain: binary_sensor
   condition:
   - condition: time
     after: '9:00'
@@ -143,7 +171,7 @@
     entity_id: input_boolean.heat_away
   mode: single
 - id: '1609193648126'
-  alias: Enable heater override
+  alias: Enable heater override salon
   description: ''
   trigger:
   - type: motion
@@ -171,7 +199,7 @@
     entity_id: input_boolean.climate_override
   mode: single
 - id: '1609194043746'
-  alias: Disable heater override
+  alias: Disable heater override salon
   description: ''
   trigger:
   - type: no_motion
@@ -181,18 +209,29 @@
     domain: binary_sensor
     for:
       hours: 0
-      minutes: 4
+      minutes: 20
       seconds: 0
   condition:
-  - condition: time
-    after: '8:00'
-    before: '16:30'
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+  - condition: and
+    conditions:
+    - condition: time
+      after: '8:00'
+      before: '16:30'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - type: is_no_motion
+      condition: device
+      device_id: 1d8d1b9b1933487ef081d89a8cf9d047
+      entity_id: binary_sensor.pir_sensor_etage_occupancy
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 20
+        seconds: 0
   action:
   - service: input_boolean.turn_off
     data: {}
@@ -254,4 +293,342 @@
     device_id: 6cbde7d3f7e07a7100de37b285a44a17
     entity_id: switch.0x00158d00042640bf_switch_right
     domain: switch
+  - type: turn_off
+    device_id: 2ed91ee0771b74686e877ee730958fbb
+    entity_id: light.lampe_salon_blanche
+    domain: light
+  - type: turn_off
+    device_id: dfb4680f0d95a05e5c42e37cd0e18d46
+    entity_id: light.lampe_tv
+    domain: light
+  mode: single
+- id: '1611438868820'
+  alias: Toggle lampe escalier
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 167ec04c37304015ce47b11c351bf61c
+    type: click
+    subtype: single
+    discovery_id: 0x00158d00039a3089 click_single
+  - platform: device
+    domain: mqtt
+    device_id: 0f323855cebb7c22c912c49d5d045141
+    type: click
+    subtype: single
+    discovery_id: 0x00158d00039a3037 click_single
+  condition: []
+  action:
+  - type: toggle
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+  mode: single
+- id: '1611442641089'
+  alias: Toggle Lampe blanche
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: b6a20d093fe3b27dbd1d1a73f5f3142a
+    type: action
+    subtype: single_left
+    discovery_id: 0x00158d0004650c53 action_single_left
+  condition: []
+  action:
+  - type: toggle
+    device_id: 2ed91ee0771b74686e877ee730958fbb
+    entity_id: light.lampe_salon_blanche
+    domain: light
+  mode: single
+- id: '1611442766475'
+  alias: Toggle lampe TV
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: b6a20d093fe3b27dbd1d1a73f5f3142a
+    type: action
+    subtype: single_right
+    discovery_id: 0x00158d0004650c53 action_single_right
+  condition: []
+  action:
+  - type: toggle
+    device_id: dfb4680f0d95a05e5c42e37cd0e18d46
+    entity_id: light.lampe_tv
+    domain: light
+  mode: single
+- id: '1611442954935'
+  alias: Start VMC
+  description: ''
+  trigger:
+  - type: humidity
+    platform: device
+    device_id: ed7dbefef95df4082fcdd74454a6bf33
+    entity_id: sensor.capteur_t_p_h_sdb_humidity
+    domain: sensor
+    above: 80
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 20
+  condition: []
+  action:
+  - type: turn_on
+    device_id: d271a11c5c4d4b5b8f7f7e8eb3d08bcc
+    entity_id: switch.interrupteur_vmc_lumieregarage_left
+    domain: switch
+  mode: single
+- id: '1611443007374'
+  alias: Auto off VMC
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: d271a11c5c4d4b5b8f7f7e8eb3d08bcc
+    entity_id: switch.interrupteur_vmc_lumieregarage_left
+    domain: switch
+    for:
+      hours: 4
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: d271a11c5c4d4b5b8f7f7e8eb3d08bcc
+    entity_id: switch.interrupteur_vmc_lumieregarage_left
+    domain: switch
+  mode: single
+- id: '1611443554351'
+  alias: Dowstairs enable light
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 167ec04c37304015ce47b11c351bf61c
+    type: click
+    subtype: double
+    discovery_id: 0x00158d00039a3089 click_double
+  condition: []
+  action:
+  - scene: scene.dowstairs_all_on
+  mode: single
+- id: '1611525947602'
+  alias: toggle light chambre L
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: be31939723df6b75c3b61bfdcecbea64
+    type: click
+    subtype: single
+    discovery_id: 0x00158d0002c763f8 click_single
+  condition: []
+  action:
+  - type: toggle
+    device_id: 38a2e4967ac7848912c65fd12e08cfac
+    entity_id: switch.interrupteur_chl_principal_switch
+    domain: switch
+  mode: single
+- id: '1611611172140'
+  alias: Veilleuse auto off
+  description: ''
+  trigger:
+  - platform: time
+    at: '8:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 92d5bb73624912c3aeb9ed42cd23d58e
+    entity_id: light.veilleuse_d
+    domain: light
+  mode: single
+- id: '1611611234495'
+  alias: Veilleuse auto on
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 92d5bb73624912c3aeb9ed42cd23d58e
+    entity_id: light.veilleuse_d
+    domain: light
+  mode: single
+- id: '1612030445464'
+  alias: Auto on porche
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 108a2d214bcede650b84546eefefec04
+    entity_id: binary_sensor.pir_sensor_porche_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  condition:
+  - condition: or
+    conditions:
+    - condition: sun
+      before: sunrise
+    - condition: sun
+      after: sunset
+  action:
+  - type: turn_on
+    device_id: 6cbde7d3f7e07a7100de37b285a44a17
+    entity_id: switch.0x00158d00042640bf_switch_right
+    domain: switch
+  mode: single
+- id: '1612789953819'
+  alias: Disable heater override etage
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: 1d8d1b9b1933487ef081d89a8cf9d047
+    entity_id: binary_sensor.pir_sensor_etage_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  condition:
+  - condition: and
+    conditions:
+    - condition: time
+      after: '8:00'
+      before: '16:30'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - type: is_no_motion
+      condition: device
+      device_id: ab41c2848c7d1fc4971a6940f557bb28
+      entity_id: binary_sensor.pir_sensor_salon_occupancy
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 20
+        seconds: 0
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.climate_override
+  mode: single
+- id: '1612790680340'
+  alias: Enable Heater Weekend time
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:01'
+  condition:
+  - condition: time
+    after: '22:00'
+    before: '22:02'
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.heat_away
+  mode: single
+- id: '1612791056542'
+  alias: Enable heater override etage
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 1d8d1b9b1933487ef081d89a8cf9d047
+    entity_id: binary_sensor.pir_sensor_etage_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition:
+  - condition: time
+    after: '8:00'
+    before: '16:30'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    entity_id: input_boolean.climate_override
+  mode: single
+- id: '1612791871947'
+  alias: Disable Heater Weekend etage
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: 1d8d1b9b1933487ef081d89a8cf9d047
+    entity_id: binary_sensor.pir_sensor_etage_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  condition:
+  - condition: and
+    conditions:
+    - condition: time
+      after: '9:00'
+      before: '22:00'
+      weekday:
+      - sat
+      - sun
+    - type: is_no_motion
+      condition: device
+      device_id: ab41c2848c7d1fc4971a6940f557bb28
+      entity_id: binary_sensor.pir_sensor_salon_occupancy
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 20
+        seconds: 0
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    entity_id: input_boolean.heat_away
+  mode: single
+- id: '1612793790926'
+  alias: Upstairs enable light
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 0f323855cebb7c22c912c49d5d045141
+    type: click
+    subtype: double
+    discovery_id: 0x00158d00039a3037 click_double
+  condition: []
+  action:
+  - scene: scene.upstairs_all_on
+  mode: single
+- id: '1612794075841'
+  alias: Tv soir
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: b6a20d093fe3b27dbd1d1a73f5f3142a
+    type: click
+    subtype: left_double
+    discovery_id: 0x00158d0004650c53 click_left_double
+  condition: []
+  action:
+  - scene: scene.tv_soir
   mode: single

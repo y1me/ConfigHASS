@@ -9,6 +9,11 @@ tts:
 # Add python script feature
 python_script:
 # Example configuration.yaml entry
+# Add recorder feature
+recorder:
+    auto_purge: true
+    purge_keep_days: 5
+
 # Add logger feature
 logger:
     default: info
@@ -21,3 +26,7 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 switch: !include switch.yaml
 climate: !include climate.yaml
+#http:
+#    base_url: https://cluboslo.duckdns.org
+#    ssl_certificate: /ssl/fullchain.pem
+#    ssl_key: /ssl/privkey.pem

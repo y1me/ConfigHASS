@@ -1,0 +1,175 @@
+- id: '1611443416464'
+  name: Dowstairs all on
+  entities:
+    switch.interrupteur_cuisine_principal_switch_left:
+      linkquality: 93
+      state: 'on'
+      state_left: 'ON'
+      state_right: 'OFF'
+      temperature: 25
+      friendly_name: Interrupteur_Cuisine_Principal_left
+    switch.interrupteur_cuisine_principal_switch_right:
+      linkquality: 93
+      state: 'off'
+      state_left: 'ON'
+      state_right: 'OFF'
+      temperature: 25
+      friendly_name: Interrupteur_Cuisine_Principal_right
+    switch.0x00158d00042640bf_switch_left:
+      linkquality: 21
+      state: 'on'
+      state_left: 'ON'
+      state_right: 'OFF'
+      temperature: 21
+      friendly_name: Interrupteur_Entree_Principal_left
+    switch.0x00158d00042640bf_switch_right:
+      linkquality: 21
+      state: 'off'
+      state_left: 'ON'
+      state_right: 'OFF'
+      temperature: 21
+      friendly_name: Interrupteur_Entree_Principal_right
+    switch.interrupteur_salon_principal_switch:
+      linkquality: 93
+      state: 'on'
+      friendly_name: Interrupteur_Salon_Principal
+    light.lampe_tv:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 253
+      color_temp: 355
+      linkquality: 93
+      state: 'on'
+      update:
+        state: available
+      update_available: true
+      friendly_name: Lampe_TV
+      supported_features: 47
+    light.lampe_salon_blanche:
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 254
+      linkquality: 21
+      state: 'on'
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Lampe_salon_blanche
+      supported_features: 45
+- id: '1612793652093'
+  name: Upstairs all on
+  entities:
+    switch.interrupteur_chd_principal_switch:
+      linkquality: 42
+      state: 'on'
+      friendly_name: Interrupteur_ChD_Principal
+    switch.interrupteur_chl_principal_switch:
+      linkquality: 93
+      state: 'on'
+      friendly_name: Interrupteur_ChL_Principal
+    switch.interrupteur_ch_principal:
+      linkquality: 93
+      state: 'on'
+      friendly_name: Interrupteur_Ch_Principal
+    switch.interrupteur_sdb_principal_switch:
+      linkquality: 42
+      state: 'on'
+      friendly_name: Interrupteur_SDB_Principal
+- id: '1612793993289'
+  name: TV soir
+  entities:
+    light.lampe_tv:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 253
+      color_temp: 355
+      linkquality: 93
+      state: 'off'
+      update:
+        state: available
+      update_available: true
+      friendly_name: Lampe_TV
+      supported_features: 47
+    light.lampe_escalier:
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 251
+      linkquality: 42
+      state: 'off'
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Lampe_escalier
+      supported_features: 45
+    light.lampe_salon_blanche:
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 28
+      linkquality: 21
+      state: 'on'
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Lampe_salon_blanche
+      supported_features: 45
+    switch.0x00158d00042640bf_switch_left:
+      linkquality: 21
+      state: 'off'
+      state_left: 'OFF'
+      state_right: 'OFF'
+      temperature: 21
+      friendly_name: Interrupteur_Entree_Principal_left
+    switch.0x00158d00042640bf_switch_right:
+      linkquality: 21
+      state: 'off'
+      state_left: 'OFF'
+      state_right: 'OFF'
+      temperature: 21
+      friendly_name: Interrupteur_Entree_Principal_right
+    switch.interrupteur_cuisine_principal_switch_left:
+      linkquality: 96
+      state: 'off'
+      state_left: 'OFF'
+      state_right: 'OFF'
+      temperature: 25
+      friendly_name: Interrupteur_Cuisine_Principal_left
+    switch.interrupteur_cuisine_principal_switch_right:
+      linkquality: 96
+      state: 'off'
+      state_left: 'OFF'
+      state_right: 'OFF'
+      temperature: 25
+      friendly_name: Interrupteur_Cuisine_Principal_right
+    switch.interrupteur_salon_principal_switch:
+      linkquality: 93
+      state: 'off'
+      friendly_name: Interrupteur_Salon_Principal

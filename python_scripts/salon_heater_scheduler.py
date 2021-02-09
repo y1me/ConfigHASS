@@ -120,6 +120,8 @@ if heating_on == 'on':
 
     if climate_override == 'on':
         new_temp_salon = TEMP_HEAT_SALON
+    elif heating_away == 'on':
+        new_temp_salon = TEMP_HEAT_AWAY    
     else :
         for high_time in current_schedule:
 

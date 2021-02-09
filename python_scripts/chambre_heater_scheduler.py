@@ -118,17 +118,22 @@ if heating_on == 'on':
 
     new_temp_chambre = TEMP_HEAT_AWAY    
 
-    for high_time in current_schedule:
+    if climate_override == 'on':
+        new_temp_chambre = TEMP_HEAT_CHAMBRE
+    elif heating_away == 'on':
+        new_temp_chambre = TEMP_HEAT_AWAY    
+    else :
+        for high_time in current_schedule:
 
-        start = high_time[0]
+            start = high_time[0]
 
-        end = high_time[1]
+            end = high_time[1]
 
-        if start <= now <= end:        
+            if start <= now <= end:        
 
-            new_temp_chambre = TEMP_HEAT_CHAMBRE
+                new_temp_chambre = TEMP_HEAT_CHAMBRE
 
-            break
+                break
 
     for high_time in current_schedule_night:
 
