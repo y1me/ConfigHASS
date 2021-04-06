@@ -11,6 +11,8 @@
       hours: 0
       minutes: 5
       seconds: 0
+  - platform: sun
+    event: sunrise
   condition: []
   action:
   - type: turn_off
@@ -436,12 +438,16 @@
   description: ''
   trigger:
   - platform: time
-    at: '8:00'
+    at: '9:00'
   condition: []
   action:
   - type: turn_off
     device_id: 92d5bb73624912c3aeb9ed42cd23d58e
     entity_id: light.veilleuse_d
+    domain: light
+  - type: turn_off
+    device_id: 663c62a4234a008d37a8ab2e6fb140f9
+    entity_id: light.veilleuse_l
     domain: light
   mode: single
 - id: '1611611234495'
@@ -456,6 +462,12 @@
     device_id: 92d5bb73624912c3aeb9ed42cd23d58e
     entity_id: light.veilleuse_d
     domain: light
+    brightness_pct: 18
+  - type: turn_on
+    device_id: 663c62a4234a008d37a8ab2e6fb140f9
+    entity_id: light.veilleuse_l
+    domain: light
+    brightness_pct: 18
   mode: single
 - id: '1612030445464'
   alias: Auto on porche
@@ -631,4 +643,208 @@
   condition: []
   action:
   - scene: scene.tv_soir
+  mode: single
+- id: '1612959577833'
+  alias: Led_cuisine_auto_on
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    entity_id: switch.interrupteur_cuisine_principal_switch_left
+    domain: switch
+  condition: []
+  action:
+  - type: turn_on
+    device_id: dced75a2e66fc2aa7c46c05b59bb1341
+    entity_id: light.led_meuble_cuisine
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1612959732860'
+  alias: Led_cuisine_auto_off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    entity_id: switch.interrupteur_cuisine_principal_switch_left
+    domain: switch
+  condition: []
+  action:
+  - type: turn_off
+    device_id: dced75a2e66fc2aa7c46c05b59bb1341
+    entity_id: light.led_meuble_cuisine
+    domain: light
+  mode: single
+- id: '1614201759657'
+  alias: ' stairs light on evening'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+  condition:
+  - condition: time
+    after: '20:00'
+    before: '7:00'
+  action:
+  - type: turn_on
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+    brightness_pct: 1
+  - type: turn_on
+    device_id: dced75a2e66fc2aa7c46c05b59bb1341
+    entity_id: light.led_meuble_cuisine
+    domain: light
+    brightness_pct: 1
+  mode: single
+- id: '1614202031684'
+  alias: ' stairs light off evening'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+  condition:
+  - condition: time
+    after: '20:00'
+    before: '7:00'
+  action:
+  - type: turn_off
+    device_id: dced75a2e66fc2aa7c46c05b59bb1341
+    entity_id: light.led_meuble_cuisine
+    domain: light
+  mode: single
+- id: '1614202387993'
+  alias: ' stairs light on daylight'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+  condition:
+  - condition: time
+    after: '7:00'
+    before: '20:00'
+  action:
+  - type: turn_on
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1614726670221'
+  alias: light_garage_on
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: db95a847ab4cd56a1e4cec43ed68de67
+    entity_id: binary_sensor.door_kitchen_garage_contact
+    domain: binary_sensor
+  - type: motion
+    platform: device
+    device_id: 06077aef019d78a7695db84cdf5e1853
+    entity_id: binary_sensor.pir_sensor_garage_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - platform: device
+    domain: mqtt
+    device_id: 4e2d37f7435be9d5de3bf0babb532b24
+    type: action
+    subtype: tilt
+    discovery_id: 0x00158d00048317f3 action_tilt
+  condition: []
+  action:
+  - type: turn_on
+    device_id: d271a11c5c4d4b5b8f7f7e8eb3d08bcc
+    entity_id: switch.interrupteur_vmc_lumieregarage_right
+    domain: switch
+  mode: single
+- id: '1614726984380'
+  alias: light_garage_off
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: 06077aef019d78a7695db84cdf5e1853
+    entity_id: binary_sensor.pir_sensor_garage_occupancy
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: d271a11c5c4d4b5b8f7f7e8eb3d08bcc
+    entity_id: switch.interrupteur_vmc_lumieregarage_right
+    domain: switch
+  mode: single
+- id: '1615157446467'
+  alias: Led_cuisine_Toggle
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: ad618d43ff1cf0aa16602ebbaade3e76
+    type: click
+    subtype: right
+    discovery_id: 0x00158d0004264748 click_right
+  condition: []
+  action:
+  - type: toggle
+    device_id: dced75a2e66fc2aa7c46c05b59bb1341
+    entity_id: light.led_meuble_cuisine
+    domain: light
+  mode: single
+- id: '1615674585007'
+  alias: ' stairs light 100% Brigthness'
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 0f323855cebb7c22c912c49d5d045141
+    type: action
+    subtype: hold
+    discovery_id: 0x00158d00039a3037 action_hold
+  condition: []
+  action:
+  - type: turn_on
+    device_id: b13bde809751d5ce53345f08fe7ab468
+    entity_id: light.lampe_escalier
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1615674916061'
+  alias: Veilleuse lower brigthness
+  description: ''
+  trigger:
+  - platform: time
+    at: '4:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 92d5bb73624912c3aeb9ed42cd23d58e
+    entity_id: light.veilleuse_d
+    domain: light
+    brightness_pct: 1
+  - type: turn_on
+    device_id: 663c62a4234a008d37a8ab2e6fb140f9
+    entity_id: light.veilleuse_l
+    domain: light
+    brightness_pct: 1
   mode: single

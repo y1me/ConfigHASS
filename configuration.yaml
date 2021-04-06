@@ -30,3 +30,6 @@ climate: !include climate.yaml
 #    base_url: https://cluboslo.duckdns.org
 #    ssl_certificate: /ssl/fullchain.pem
 #    ssl_key: /ssl/privkey.pem
+shell_command:
+    # Command to update DDNS with public IP address
+    Open_Gate: '/usr/local/bin/testGate.py'

@@ -1,0 +1,4 @@
+#test a simple shell script
+  shelltest:
+    sequence:
+    - service: shell_command.Open_Gate
