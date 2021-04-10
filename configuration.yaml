@@ -32,4 +32,4 @@ climate: !include climate.yaml
 #    ssl_key: /ssl/privkey.pem
 shell_command:
     # Command to update DDNS with public IP address
-    Open_Gate: '/usr/local/bin/testGate.py'
+    open_gate: touch opengate 

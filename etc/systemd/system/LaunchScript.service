@@ -1,0 +1,11 @@
+[Unit]
+Description=Launch host script if trigger file exist (systemd service)
+
+[Service]
+ExecStart=/usr/local/bin/launchscript.sh
+Restart=always
+RestartSec=5
+Type=Idle
+
+[Install]
+WantedBy=multi-user.target
