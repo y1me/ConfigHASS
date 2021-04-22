@@ -3,21 +3,6 @@
 import time
 from mcp2210 import Mcp2210, Mcp2210GpioDesignation, Mcp2210GpioDirection
 mcp = Mcp2210(serial_number="0000406445")
-print("Set GPIO")
-for i in range(2):
-    print(i)
-    mcp.set_gpio_designation(i, Mcp2210GpioDesignation.GPIO)
-print("Set GPIO direction")
-for i in range(2):
-    print(i)
-    mcp.set_gpio_direction(i, Mcp2210GpioDirection.OUTPUT)
-
-mcp.set_gpio_output_value(0, False)
-mcp.set_gpio_output_value(1, False)
-
-import time
-from mcp2210 import Mcp2210, Mcp2210GpioDesignation, Mcp2210GpioDirection
-mcp = Mcp2210(serial_number="0000406445")
 # GPIO 0 : 5V power control
 # GPIO 1 : Emit open gate signal 
 # GPIO 2 : control relay 2 
@@ -58,21 +43,15 @@ mcp.set_gpio_output_value(RELAY4, True)
 #time.sleep(3)
 print("Power on remote")
 mcp.set_gpio_output_value(POWER, True)
+time.sleep(0.3)
+print("opening garage")
+mcp.set_gpio_output_value(RELAY1, False)
 time.sleep(0.5)
-print("Send opening gate signal")
-mcp.set_gpio_output_value(REMOTE, True)
-time.sleep(1)
-mcp.set_gpio_output_value(REMOTE, False)
-time.sleep(1)
-print("Send opening gate signal")
-mcp.set_gpio_output_value(REMOTE, True)
-time.sleep(1)
-mcp.set_gpio_output_value(REMOTE, False)
-time.sleep(1)
-#print("Send opening gate signal")
-#mcp.set_gpio_output_value(1, True)
-#time.sleep(4)
-#mcp.set_gpio_output_value(1, False)
+mcp.set_gpio_output_value(RELAY1, True)
+time.sleep(7)
+mcp.set_gpio_output_value(RELAY1, False)
+time.sleep(0.5)
+mcp.set_gpio_output_value(RELAY1, True)
 print("Power off remote")
-mcp.set_gpio_output_value(POWER, False)
+mcp.set_gpio_output_value(0, False)
 exit(0)

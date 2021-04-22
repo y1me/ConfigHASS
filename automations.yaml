@@ -688,7 +688,7 @@
     domain: light
   condition:
   - condition: time
-    after: '20:00'
+    after: '21:00'
     before: '7:00'
   action:
   - type: turn_on
@@ -847,4 +847,194 @@
     entity_id: light.veilleuse_l
     domain: light
     brightness_pct: 1
+  mode: single
+- id: '1618146398753'
+  alias: Shutdown climate downstair
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: edc3fa22239133fd1385804ec13587c9
+    entity_id: binary_sensor.door_entree_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - type: opened
+    platform: device
+    device_id: 4282aff07c240a78ef439abeb0fda42d
+    entity_id: binary_sensor.door_salon_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 1
+      milliseconds: 0
+  - type: opened
+    platform: device
+    device_id: b0b4660f80bfcec836b0c9ff2d4bf208
+    entity_id: binary_sensor.window_cuisine_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: climate.turn_off
+    target:
+      entity_id: climate.salon
+  mode: single
+- id: '1618147486265'
+  alias: ' Start climate downstair'
+  description: ''
+  trigger:
+  - type: not_opened
+    platform: device
+    device_id: 4282aff07c240a78ef439abeb0fda42d
+    entity_id: binary_sensor.door_salon_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - type: not_opened
+    platform: device
+    device_id: edc3fa22239133fd1385804ec13587c9
+    entity_id: binary_sensor.door_entree_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - type: not_opened
+    platform: device
+    device_id: b0b4660f80bfcec836b0c9ff2d4bf208
+    entity_id: binary_sensor.window_cuisine_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  condition:
+  - condition: and
+    conditions:
+    - type: is_not_open
+      condition: device
+      device_id: b0b4660f80bfcec836b0c9ff2d4bf208
+      entity_id: binary_sensor.window_cuisine_contact
+      domain: binary_sensor
+    - type: is_not_open
+      condition: device
+      device_id: 4282aff07c240a78ef439abeb0fda42d
+      entity_id: binary_sensor.door_salon_contact
+      domain: binary_sensor
+    - type: is_not_open
+      condition: device
+      device_id: edc3fa22239133fd1385804ec13587c9
+      entity_id: binary_sensor.door_entree_contact
+      domain: binary_sensor
+  action:
+  - service: climate.turn_on
+    target:
+      entity_id: climate.salon
+  mode: single
+- id: '1618931997550'
+  alias: New Automation
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_boolean.test
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.test
+  - type: toggle
+    device_id: 2ed91ee0771b74686e877ee730958fbb
+    entity_id: light.lampe_salon_blanche
+    domain: light
+  mode: single
+- id: '1618956377764'
+  alias: Start climate chambre
+  description: ''
+  trigger:
+  - type: not_opened
+    platform: device
+    device_id: 21b14e47c7182ffcddeb93a1191410b6
+    entity_id: binary_sensor.window_chambre_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  condition: []
+  action:
+  - service: climate.turn_on
+    target:
+      entity_id: climate.chambre
+  mode: single
+- id: '1618956481839'
+  alias: Shutdown climate chambre
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 21b14e47c7182ffcddeb93a1191410b6
+    entity_id: binary_sensor.window_chambre_contact
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: climate.turn_off
+    target:
+      entity_id: climate.chambre
+  mode: single
+- id: '1618959543635'
+  alias: Open garage
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /2
+  condition:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.angle_y_bottom
+      below: '50'
+    - condition: numeric_state
+      entity_id: sensor.angle_y_top
+      below: '50'
+  action:
+  - service: shell_command.open_garage
+  mode: single
+- id: '1618985084160'
+  alias: Close garage
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /2
+  condition:
+  - condition: or
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.angle_y_bottom
+      above: '50'
+    - condition: numeric_state
+      entity_id: sensor.angle_y_top
+      above: '50'
+  action:
+  - service: shell_command.open_garage
   mode: single

@@ -25,11 +25,9 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 switch: !include switch.yaml
+sensor: !include sensor.yaml
 climate: !include climate.yaml
-#http:
-#    base_url: https://cluboslo.duckdns.org
-#    ssl_certificate: /ssl/fullchain.pem
-#    ssl_key: /ssl/privkey.pem
 shell_command:
-    # Command to update DDNS with public IP address
     open_gate: touch opengate 
+    open_garage: touch opengarage 
+    open_garagehalf: touch opengaragehalf 

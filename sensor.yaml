@@ -1,0 +1,21 @@
+#sensor:
+  - platform: template
+    sensors:
+      angle_x_top:
+        value_template: "{{ state_attr('sensor.garage_door_top_action', 'angle_x_absolute' ) }}"
+        unit_of_measurement: "°"
+      angle_y_top:
+        value_template: "{{ state_attr('sensor.garage_door_top_action', 'angle_y_absolute' ) }}"
+        unit_of_measurement: "°"
+      angle_z_top:
+        value_template: "{{ state_attr('sensor.garage_door_top_action', 'angle_z' ) }}"
+        unit_of_measurement: "°"
+      angle_x_bottom:
+        value_template: "{{ state_attr('sensor.garage_door_bottom_action', 'angle_x_absolute' ) }}"
+        unit_of_measurement: "°"
+      angle_y_bottom:
+        value_template: "{{ state_attr('sensor.garage_door_bottom_action', 'angle_y_absolute' ) }}"
+        unit_of_measurement: "°"
+      angle_z_bottom:
+        value_template: "{{ state_attr('sensor.garage_door_bottom_action', 'angle_z' ) }}"
+        unit_of_measurement: "°"
